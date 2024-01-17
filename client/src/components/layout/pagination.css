@@ -1,0 +1,30 @@
+/* Pagination container */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 20px auto;
+}
+
+/* Pagination buttons */
+.page-item {
+  background-color: #f6f7f9;
+  color: #000;
+  border: 1px solid #000;
+  padding: 8px 12px;
+  /* margin: 0 5px; */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Active page button */
+.page-item.active {
+  background-color: #3d343e;
+  color: #fff;
+}
+
+/* Hover effect for buttons */
+.page-item:hover {
+  background-color: #0056b3;
+}

@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  postgresdb:
+    container_name: "postgresdb"
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '35000:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+    restart: on-failure
+    depends_on:
+       - postgresdb
+    command: sh -c "python manage.py makemigrations & python manage.py migrate & python manage.py crawl & python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8001:8000"
+  
+  frontend:
+    container_name: frontend
+    build:
+      context: ./client
+    depends_on:
+       - backend
+    ports:
+      - "8080:3000"
+
+volumes:
+  db:
+    driver: local
